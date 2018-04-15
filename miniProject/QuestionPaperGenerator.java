@@ -20,6 +20,7 @@ import java.util.Random;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -41,7 +42,7 @@ public class QuestionPaperGenerator extends JFrame {
 	String format = ".txt";
 	File fileq = new File("Question.txt");
 	File filea = new File("Answer.txt");
-	String instituteName,maxMarks,date,courseCode,topic;
+	String instituteName,maxMarks,date,courseCode,topic,qBankName,aBankName;
 	
 	public QuestionPaperGenerator() {
 		this.setSize(500, 500);
@@ -165,7 +166,7 @@ public class QuestionPaperGenerator extends JFrame {
 			viewB.setBounds(50, 255, 130, 30);
 			delete = new JButton("Delete");
 			delete.setBounds(220, 255, 130, 30);
-			edit = new JButton("Edit Type");
+			edit = new JButton("Edit Q. Bank");
 			edit.setBounds(220, 200, 130, 30);
 			insert = new JButton("Question Type");
 			insert.setBounds(50, 200, 130, 30);
@@ -222,7 +223,7 @@ public class QuestionPaperGenerator extends JFrame {
 			} else if (e.getSource() == edit) {
 				if (fileq.exists() && filea.exists()) {
 					try {
-						new SelectType();
+						new SelectBank();
 					} catch (Exception e1) {
 					}
 				}
@@ -235,44 +236,36 @@ public class QuestionPaperGenerator extends JFrame {
 		}
 	}
 
-	public class SelectType extends JFrame implements ActionListener, ItemListener {
-		SelectType() {
-			this.setSize(400, 400);
+	public class SelectBank extends JFrame implements ActionListener, ItemListener {
+		JButton selectQBank,selectABank,generateFromBank;
+		String qBank=null;
+		String aBank=null;
+		SelectBank() {
+			this.setSize(500, 450);
 			this.setLocationRelativeTo(null);
 			this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-			this.setTitle("Output File Format");
+			this.setTitle("Select Question Banks");
 			this.setResizable(false);
 			JTextField display = new JTextField();
-			display.setText("Select Output File Type  :");
+			display.setText("Select Question Banks  :");
 			display.setBounds(50, 50, 300, 35);
 			display.setEditable(false);
-
-			op1 = new JRadioButton("txt", null, true);
-			op1.setBounds(50, 100, 150, 40);
-			op2 = new JRadioButton("docx");
-			op2.setBounds(50, 150, 150, 40);
-			op3 = new JRadioButton("pdf");
-			op3.setBounds(50, 200, 150, 40);
-			ButtonGroup questionType = new ButtonGroup();
-			questionType.add(op1);
-			questionType.add(op2);
-			questionType.add(op3);
-
-			JPanel panelForInsertQuestionFrame = new JPanel();
-
-			Format = new JButton("Format");
-			Format.setBounds(150, 300, 100, 30);
-
-			op1.addItemListener(this);
-			op2.addItemListener(this);
-			op3.addItemListener(this);
-			Format.addActionListener(this);
-			this.add(op1);
-			this.add(op2);
-			this.add(op3);
-			this.add(display);
-			this.add(Format);
-			this.add(panelForInsertQuestionFrame);
+			
+			selectQBank=new JButton("Select Question Bank");
+			selectQBank.setBounds(50, 200, 200, 30);
+			selectABank=new JButton("Select Answer Bank");
+			selectABank.setBounds(280, 200, 200, 30);
+			generateFromBank=new JButton("Generate From Bank");
+			generateFromBank.setBounds(125, 275, 255, 30);
+			selectQBank.addActionListener(this);
+			selectABank.addActionListener(this);
+			generateFromBank.addActionListener(this);
+			
+			JPanel panel=new JPanel();
+			this.add(selectQBank);
+			this.add(selectABank);
+			this.add(generateFromBank);
+			this.add(panel);
 			this.setVisible(true);
 		}
 
@@ -290,9 +283,32 @@ public class QuestionPaperGenerator extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent ae) {
 			// TODO Auto-generated method stub
-			if (ae.getSource() == Format) {
-				setVisible(false);
-				System.out.println("Hello");
+			if (ae.getSource() == selectQBank) {
+				JFileChooser chooser = new JFileChooser();
+		        int returnVal = chooser.showOpenDialog(null);
+		        if(returnVal == JFileChooser.APPROVE_OPTION) {
+		        	qBank=chooser.getSelectedFile().getName();
+		        }
+			}
+			else if (ae.getSource() == selectABank) {
+				JFileChooser chooser = new JFileChooser();
+		        int returnVal = chooser.showOpenDialog(null);
+		        if(returnVal == JFileChooser.APPROVE_OPTION) {
+		        	aBank=chooser.getSelectedFile().getName();
+		        }
+			}
+			else if (ae.getSource() == generateFromBank) {
+				if(!(qBank==null)||!(aBank==null))
+				{
+					qBankName=qBank;
+					aBankName=aBank;
+					try {
+						generate(1,1,5, true);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+				System.out.println("Hello2");
 			}
 		}
 	}
@@ -355,7 +371,7 @@ public class QuestionPaperGenerator extends JFrame {
 				String n1 = numberT.getText();
 				number = Integer.parseInt(n1);
 				try {
-					generate(subject, choice, number);
+					generate(subject, choice, number,false);
 				} catch (Exception excep) {
 				}
 			}
@@ -365,12 +381,18 @@ public class QuestionPaperGenerator extends JFrame {
 
 	}
 
-	void generate(int sub, int choice, int n) throws IOException {
+	void generate(int sub, int choice, int n,boolean bank) throws IOException {
 		System.out.println(format);
 		BufferedReader q = null, a = null;
 		PrintWriter writerq = new PrintWriter(new FileOutputStream("Question.txt"), true);
 		PrintWriter writera = new PrintWriter(new FileOutputStream("Answer.txt"), true);
 		try {
+			if(bank)
+			{
+				q = new BufferedReader(new FileReader(qBankName));
+				a = new BufferedReader(new FileReader(aBankName));
+			}
+			else{
 			if (sub == 1) {
 				if (choice == 1) {
 					q = new BufferedReader(new FileReader("mathq1.txt"));
@@ -398,7 +420,7 @@ public class QuestionPaperGenerator extends JFrame {
 					a = new BufferedReader(new FileReader("enga2.txt"));
 				}
 			}
-
+			}
 			Random random = new Random();
 			ArrayList<Integer> lineNo = new ArrayList<Integer>();
 
