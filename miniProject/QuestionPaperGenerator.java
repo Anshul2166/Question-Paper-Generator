@@ -527,6 +527,9 @@ public class QuestionPaperGenerator extends JFrame {
 				else
 					info = a.readLine();
 
+				Desktop desktop = Desktop.getDesktop();
+				desktop.open(fileq);
+				desktop.open(filea);
 			}
 		} catch (Exception e) {
 			e.printStackTrace(writerq);
