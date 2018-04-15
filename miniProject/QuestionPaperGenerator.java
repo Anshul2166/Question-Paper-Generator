@@ -33,7 +33,7 @@ import javax.swing.JTextField;
 
 public class QuestionPaperGenerator extends JFrame {
 	JButton submit, viewB, delete, edit, insert, Generate, Format, Question, Reject;
-	JTextField tid, numberT,instituteField,marksField,dateField,codeField,subjectField;
+	JTextField tid, numberT, instituteField, marksField, dateField, codeField, subjectField;
 	JRadioButton sub1, sub2;
 	JPasswordField pid;
 	JRadioButton op1, op2, op3;
@@ -42,14 +42,14 @@ public class QuestionPaperGenerator extends JFrame {
 	String format = ".txt";
 	File fileq = new File("Question.txt");
 	File filea = new File("Answer.txt");
-	String instituteName,maxMarks,date,courseCode,topic,qBankName,aBankName;
-	
+	String instituteName, maxMarks, date, courseCode, topic, qBankName, aBankName;
+
 	public QuestionPaperGenerator() {
 		this.setSize(500, 500);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setTitle("Question Paper Generator");
-		JPanel Panel1 = new JPanel(new GridLayout(8,8));
+		JPanel Panel1 = new JPanel(new GridLayout(8, 8));
 		Panel1.setBackground(Color.lightGray);
 		JLabel id = new JLabel("USER ID : ");
 		Panel1.add(id);
@@ -66,18 +66,18 @@ public class QuestionPaperGenerator extends JFrame {
 		JLabel dateFieldLabel = new JLabel("Date of Exam : ");
 		JLabel subjectFieldLabel = new JLabel("Subject : ");
 		JLabel codeFieldLabel = new JLabel("Subject Code : ");
-		instituteField=new JTextField(20);		
-		codeField=new JTextField(10);
-		subjectField=new JTextField(10);
-		dateField=new JTextField(10);
-		marksField=new JTextField(10);
-		
+		instituteField = new JTextField(20);
+		codeField = new JTextField(10);
+		subjectField = new JTextField(10);
+		dateField = new JTextField(10);
+		marksField = new JTextField(10);
+
 		instituteField.setText("BITS Pilani Hyderabad Campus");
 		codeField.setText("MATHF211");
 		subjectField.setText("MATHS");
 		dateField.setText("27-04-2018");
 		marksField.setText("50");
-		
+
 		Panel1.add(instituteFieldLabel);
 		Panel1.add(instituteField);
 		Panel1.add(codeFieldLabel);
@@ -105,22 +105,24 @@ public class QuestionPaperGenerator extends JFrame {
 			if (e.getSource() == submit) {
 				String sid = tid.getText();
 				String spass = pid.getText();
-				String instituteNameLocal=instituteField.getText();
-				String courseCodeLocal=codeField.getText();
-				String subjectLocal=subjectField.getText();
-				String marksLocal=marksField.getText();
-				String dateLocal=dateField.getText();
-				if (sid.equals("2015") && spass.equals("A3309")&&!instituteNameLocal.isEmpty()&&!courseCodeLocal.isEmpty()&&!subjectLocal.isEmpty()&&!marksLocal.isEmpty()&&!dateLocal.isEmpty()) {
+				String instituteNameLocal = instituteField.getText();
+				String courseCodeLocal = codeField.getText();
+				String subjectLocal = subjectField.getText();
+				String marksLocal = marksField.getText();
+				String dateLocal = dateField.getText();
+				if (sid.equals("2015") && spass.equals("A3309") && !instituteNameLocal.isEmpty()
+						&& !courseCodeLocal.isEmpty() && !subjectLocal.isEmpty() && !marksLocal.isEmpty()
+						&& !dateLocal.isEmpty()) {
 					new QuestionPaperGeneratorWindow();
-					instituteName=instituteNameLocal;
-					courseCode=courseCodeLocal;
-					topic=subjectLocal;
-					date=dateLocal;
-					maxMarks=marksLocal;
+					instituteName = instituteNameLocal;
+					courseCode = courseCodeLocal;
+					topic = subjectLocal;
+					date = dateLocal;
+					maxMarks = marksLocal;
 					QuestionPaperGenerator.this.setVisible(false);
 				} else {
-					JOptionPane.showMessageDialog(QuestionPaperGenerator.this, "Filled Entries are invalid",
-							"Error", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(QuestionPaperGenerator.this, "Filled Entries are invalid", "Error",
+							JOptionPane.ERROR_MESSAGE);
 
 				}
 			}
@@ -237,9 +239,10 @@ public class QuestionPaperGenerator extends JFrame {
 	}
 
 	public class SelectBank extends JFrame implements ActionListener, ItemListener {
-		JButton selectQBank,selectABank,generateFromBank;
-		String qBank=null;
-		String aBank=null;
+		JButton selectQBank, selectABank, generateFromBank;
+		String qBank = null;
+		String aBank = null;
+
 		SelectBank() {
 			this.setSize(500, 450);
 			this.setLocationRelativeTo(null);
@@ -250,18 +253,18 @@ public class QuestionPaperGenerator extends JFrame {
 			display.setText("Select Question Banks  :");
 			display.setBounds(50, 50, 300, 35);
 			display.setEditable(false);
-			
-			selectQBank=new JButton("Select Question Bank");
+
+			selectQBank = new JButton("Select Question Bank");
 			selectQBank.setBounds(50, 200, 200, 30);
-			selectABank=new JButton("Select Answer Bank");
+			selectABank = new JButton("Select Answer Bank");
 			selectABank.setBounds(280, 200, 200, 30);
-			generateFromBank=new JButton("Generate From Bank");
+			generateFromBank = new JButton("Generate From Bank");
 			generateFromBank.setBounds(125, 275, 255, 30);
 			selectQBank.addActionListener(this);
 			selectABank.addActionListener(this);
 			generateFromBank.addActionListener(this);
-			
-			JPanel panel=new JPanel();
+
+			JPanel panel = new JPanel();
 			this.add(selectQBank);
 			this.add(selectABank);
 			this.add(generateFromBank);
@@ -271,13 +274,7 @@ public class QuestionPaperGenerator extends JFrame {
 
 		@Override
 		public void itemStateChanged(ItemEvent ie) {
-			// TODO Auto-generated method stub
-			if (ie.getSource() == op1)
-				format = ".txt";
-			else if (ie.getSource() == op2)
-				format = ".docx";
-			else if (ie.getSource() == op3)
-				format = ".pdf";
+
 		}
 
 		@Override
@@ -285,25 +282,22 @@ public class QuestionPaperGenerator extends JFrame {
 			// TODO Auto-generated method stub
 			if (ae.getSource() == selectQBank) {
 				JFileChooser chooser = new JFileChooser();
-		        int returnVal = chooser.showOpenDialog(null);
-		        if(returnVal == JFileChooser.APPROVE_OPTION) {
-		        	qBank=chooser.getSelectedFile().getName();
-		        }
-			}
-			else if (ae.getSource() == selectABank) {
+				int returnVal = chooser.showOpenDialog(null);
+				if (returnVal == JFileChooser.APPROVE_OPTION) {
+					qBank = chooser.getSelectedFile().getName();
+				}
+			} else if (ae.getSource() == selectABank) {
 				JFileChooser chooser = new JFileChooser();
-		        int returnVal = chooser.showOpenDialog(null);
-		        if(returnVal == JFileChooser.APPROVE_OPTION) {
-		        	aBank=chooser.getSelectedFile().getName();
-		        }
-			}
-			else if (ae.getSource() == generateFromBank) {
-				if(!(qBank==null)||!(aBank==null))
-				{
-					qBankName=qBank;
-					aBankName=aBank;
+				int returnVal = chooser.showOpenDialog(null);
+				if (returnVal == JFileChooser.APPROVE_OPTION) {
+					aBank = chooser.getSelectedFile().getName();
+				}
+			} else if (ae.getSource() == generateFromBank) {
+				if (!(qBank == null) || !(aBank == null)) {
+					qBankName = qBank;
+					aBankName = aBank;
 					try {
-						generate(1,1,5, true);
+						generate(1, 1, 5, true);
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
@@ -371,7 +365,7 @@ public class QuestionPaperGenerator extends JFrame {
 				String n1 = numberT.getText();
 				number = Integer.parseInt(n1);
 				try {
-					generate(subject, choice, number,false);
+					generate(subject, choice, number, false);
 				} catch (Exception excep) {
 				}
 			}
@@ -381,45 +375,41 @@ public class QuestionPaperGenerator extends JFrame {
 
 	}
 
-	void generate(int sub, int choice, int n,boolean bank) throws IOException {
+	void generate(int sub, int choice, int n, boolean bank) throws IOException {
 		System.out.println(format);
 		BufferedReader q = null, a = null;
 		PrintWriter writerq = new PrintWriter(new FileOutputStream("Question.txt"), true);
 		PrintWriter writera = new PrintWriter(new FileOutputStream("Answer.txt"), true);
 		try {
-			if(bank)
-			{
+			if (bank) {
 				q = new BufferedReader(new FileReader(qBankName));
 				a = new BufferedReader(new FileReader(aBankName));
-			}
-			else{
-			if (sub == 1) {
-				if (choice == 1) {
-					q = new BufferedReader(new FileReader("mathq1.txt"));
-					a = new BufferedReader(new FileReader("matha1.txt"));
-				}
-				else if(choice==2){
-					q = new BufferedReader(new FileReader("mathq2.txt"));
-					a = new BufferedReader(new FileReader("matha2.txt"));
-				}
-				else{
-					q = new BufferedReader(new FileReader("mathq3.txt"));
-					a = new BufferedReader(new FileReader("matha3.txt"));
-				}
+			} else {
+				if (sub == 1) {
+					if (choice == 1) {
+						q = new BufferedReader(new FileReader("mathq1.txt"));
+						a = new BufferedReader(new FileReader("matha1.txt"));
+					} else if (choice == 2) {
+						q = new BufferedReader(new FileReader("mathq2.txt"));
+						a = new BufferedReader(new FileReader("matha2.txt"));
+					} else {
+						q = new BufferedReader(new FileReader("mathq3.txt"));
+						a = new BufferedReader(new FileReader("matha3.txt"));
+					}
 
-			}
-
-			else {
-				if (choice == 1) {
-					q = new BufferedReader(new FileReader("engq1.txt"));
-					a = new BufferedReader(new FileReader("enga1.txt"));
 				}
 
 				else {
-					q = new BufferedReader(new FileReader("engq2.txt"));
-					a = new BufferedReader(new FileReader("enga2.txt"));
+					if (choice == 1) {
+						q = new BufferedReader(new FileReader("engq1.txt"));
+						a = new BufferedReader(new FileReader("enga1.txt"));
+					}
+
+					else {
+						q = new BufferedReader(new FileReader("engq2.txt"));
+						a = new BufferedReader(new FileReader("enga2.txt"));
+					}
 				}
-			}
 			}
 			Random random = new Random();
 			ArrayList<Integer> lineNo = new ArrayList<Integer>();
@@ -441,21 +431,26 @@ public class QuestionPaperGenerator extends JFrame {
 			writerq.println();
 			writerq.println(String.format(formatStr, "", instituteName));
 			formatStr = "%-10s %-10s %140s %-85s";
-			writerq.println(String.format(formatStr, " ", "Subject:"+topic, " ", "Date:"+date));
-			writerq.println(String.format(formatStr, " ", "Course-Code:"+courseCode, " ", "MM:"+maxMarks));
+			writerq.println(String.format(formatStr, " ", "Subject:" + topic, " ", "Date:" + date));
+			writerq.println(String.format(formatStr, " ", "Course-Code:" + courseCode, " ", "MM:" + maxMarks));
 			writerq.println(
 					"          --------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 			writerq.println();
 			for (int i = 0, c = 0; i < 10; i++) {
-				if (lineNo.contains(i)) {
-					info = q.readLine();
+				info = q.readLine();
+				if(info==null)
+				{
+					//reached end of line
+					break;
+				}
+				if (lineNo.contains(i)) {					
 					String s = (++c) + ". " + info;
 					if (choice == 1) {
 						int indexA = s.indexOf("A.");
 						int indexB = s.indexOf("B.");
 						int indexC = s.indexOf("C.");
 						int indexD = s.indexOf("D.");
-						System.out.println(indexA+" "+indexB+" "+indexC+" "+indexD);
+						System.out.println(indexA + " " + indexB + " " + indexC + " " + indexD);
 						String ques = s.substring(0, indexA - 1);
 						System.out.println(ques);
 						String optionA = s.substring(indexA, indexB);
@@ -471,8 +466,8 @@ public class QuestionPaperGenerator extends JFrame {
 						writerq.println(String.format("%1$" + (10 + s.length()) + "s", s));
 					}
 					writerq.println();
-				} else
-					info = q.readLine();
+				}
+				
 			}
 
 			writera.println("ANSWER :");
