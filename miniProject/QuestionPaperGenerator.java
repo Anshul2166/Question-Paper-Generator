@@ -242,7 +242,7 @@ public class QuestionPaperGenerator extends JFrame {
 		JButton selectQBank, selectABank, generateFromBank;
 		String qBank = null;
 		String aBank = null;
-
+		JRadioButton mcq,mcqN;
 		SelectBank() {
 			this.setSize(500, 450);
 			this.setLocationRelativeTo(null);
@@ -254,6 +254,19 @@ public class QuestionPaperGenerator extends JFrame {
 			display.setBounds(50, 50, 300, 35);
 			display.setEditable(false);
 
+			JLabel labelMcq=new JLabel("Is paper mcq?");
+			mcq=new JRadioButton("Yes",null,true);
+			mcqN=new JRadioButton("No");
+			ButtonGroup group=new ButtonGroup();
+			group.add(mcq);
+			group.add(mcqN);
+			
+			JPanel panelR = new JPanel();
+			panelR.add(labelMcq);
+			panelR.add(mcq);
+			panelR.add(mcqN);
+			panelR.setBounds(90, 110, 300, 30);
+			
 			selectQBank = new JButton("Select Question Bank");
 			selectQBank.setBounds(50, 200, 200, 30);
 			selectABank = new JButton("Select Answer Bank");
@@ -265,6 +278,7 @@ public class QuestionPaperGenerator extends JFrame {
 			generateFromBank.addActionListener(this);
 
 			JPanel panel = new JPanel();
+			this.add(panelR);
 			this.add(selectQBank);
 			this.add(selectABank);
 			this.add(generateFromBank);
@@ -274,7 +288,14 @@ public class QuestionPaperGenerator extends JFrame {
 
 		@Override
 		public void itemStateChanged(ItemEvent ie) {
-
+			if(ie.getSource()==mcq)
+			{
+				choice=1;
+			}
+			else if(ie.getSource()==mcqN)
+			{
+				choice=2;
+			}
 		}
 
 		@Override
@@ -284,25 +305,29 @@ public class QuestionPaperGenerator extends JFrame {
 				JFileChooser chooser = new JFileChooser();
 				int returnVal = chooser.showOpenDialog(null);
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
-					qBank = chooser.getSelectedFile().getName();
+//					qBank = chooser.getSelectedFile().getName();
+					qBank=chooser.getSelectedFile().getAbsolutePath();
 				}
 			} else if (ae.getSource() == selectABank) {
 				JFileChooser chooser = new JFileChooser();
 				int returnVal = chooser.showOpenDialog(null);
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
-					aBank = chooser.getSelectedFile().getName();
+//					aBank = chooser.getSelectedFile().getName();
+					aBank=chooser.getSelectedFile().getAbsolutePath();
 				}
 			} else if (ae.getSource() == generateFromBank) {
 				if (!(qBank == null) || !(aBank == null)) {
 					qBankName = qBank;
 					aBankName = aBank;
 					try {
-						generate(1, 1, 5, true);
+						generate(1, choice, 5, true);
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
 				}
-				System.out.println("Hello2");
+				else{
+					JOptionPane.showMessageDialog(this,"Please select both banks");
+				}
 			}
 		}
 	}
@@ -440,7 +465,7 @@ public class QuestionPaperGenerator extends JFrame {
 				info = q.readLine();
 				if(info==null)
 				{
-					//reached end of line
+					//reached end of file
 					break;
 				}
 				if (lineNo.contains(i)) {					
