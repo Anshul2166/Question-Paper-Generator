@@ -28,11 +28,11 @@ import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
-//ID : 2015  PASSWORD: A8459
+//ID : 2015  PASSWORD: A3309
 
 public class QuestionPaperGenerator extends JFrame {
 	JButton submit, viewB, delete, edit, insert, Generate, Format, Question, Reject;
-	JTextField tid, numberT;
+	JTextField tid, numberT,instituteField,marksField,dateField,codeField,subjectField;
 	JRadioButton sub1, sub2;
 	JPasswordField pid;
 	JRadioButton op1, op2, op3;
@@ -41,25 +41,52 @@ public class QuestionPaperGenerator extends JFrame {
 	String format = ".txt";
 	File fileq = new File("Question.txt");
 	File filea = new File("Answer.txt");
-
+	String instituteName,maxMarks,date,courseCode,topic;
+	
 	public QuestionPaperGenerator() {
-		this.setSize(300, 150);
+		this.setSize(500, 500);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setTitle("Question Paper Generator");
-		JPanel Panel1 = new JPanel(new GridLayout(3, 3));
+		JPanel Panel1 = new JPanel(new GridLayout(8,8));
 		Panel1.setBackground(Color.lightGray);
 		JLabel id = new JLabel("USER ID : ");
 		Panel1.add(id);
-
 		tid = new JTextField(10);
 		tid.setText("2015");
 		Panel1.add(tid);
 		JLabel label2 = new JLabel("PASSWORD :");
 		Panel1.add(label2);
 		pid = new JPasswordField(10);
-		pid.setText("A8459");
+		pid.setText("A3309");
 		Panel1.add(pid);
+		JLabel instituteFieldLabel = new JLabel("Name of Institute : ");
+		JLabel marksFieldLabel = new JLabel("Maximum Marks : ");
+		JLabel dateFieldLabel = new JLabel("Date of Exam : ");
+		JLabel subjectFieldLabel = new JLabel("Subject : ");
+		JLabel codeFieldLabel = new JLabel("Subject Code : ");
+		instituteField=new JTextField(20);		
+		codeField=new JTextField(10);
+		subjectField=new JTextField(10);
+		dateField=new JTextField(10);
+		marksField=new JTextField(10);
+		
+		instituteField.setText("BITS Pilani Hyderabad Campus");
+		codeField.setText("MATHF211");
+		subjectField.setText("MATHS");
+		dateField.setText("27-04-2018");
+		marksField.setText("50");
+		
+		Panel1.add(instituteFieldLabel);
+		Panel1.add(instituteField);
+		Panel1.add(codeFieldLabel);
+		Panel1.add(codeField);
+		Panel1.add(subjectFieldLabel);
+		Panel1.add(subjectField);
+		Panel1.add(dateFieldLabel);
+		Panel1.add(dateField);
+		Panel1.add(marksFieldLabel);
+		Panel1.add(marksField);
 		submit = new JButton("SUBMIT");
 		submit.setBounds(500, 500, 480, 430);
 		SubmitClicked lforbutton = new SubmitClicked();
@@ -77,11 +104,21 @@ public class QuestionPaperGenerator extends JFrame {
 			if (e.getSource() == submit) {
 				String sid = tid.getText();
 				String spass = pid.getText();
-				if (sid.equals("2015") && spass.equals("A8459")) {
+				String instituteNameLocal=instituteField.getText();
+				String courseCodeLocal=codeField.getText();
+				String subjectLocal=subjectField.getText();
+				String marksLocal=marksField.getText();
+				String dateLocal=dateField.getText();
+				if (sid.equals("2015") && spass.equals("A3309")&&!instituteNameLocal.isEmpty()&&!courseCodeLocal.isEmpty()&&!subjectLocal.isEmpty()&&!marksLocal.isEmpty()&&!dateLocal.isEmpty()) {
 					new QuestionPaperGeneratorWindow();
+					instituteName=instituteNameLocal;
+					courseCode=courseCodeLocal;
+					topic=subjectLocal;
+					date=dateLocal;
+					maxMarks=marksLocal;
 					QuestionPaperGenerator.this.setVisible(false);
 				} else {
-					JOptionPane.showMessageDialog(QuestionPaperGenerator.this, "User ID/ Password combination error",
+					JOptionPane.showMessageDialog(QuestionPaperGenerator.this, "Filled Entries are invalid",
 							"Error", JOptionPane.ERROR_MESSAGE);
 
 				}
@@ -331,8 +368,6 @@ public class QuestionPaperGenerator extends JFrame {
 	void generate(int sub, int choice, int n) throws IOException {
 		System.out.println(format);
 		BufferedReader q = null, a = null;
-		// PrintWriter writerq = new PrintWriter("Question"+format, "UTF-8");
-		// PrintWriter writera = new PrintWriter("Answer"+format, "UTF-8");
 		PrintWriter writerq = new PrintWriter(new FileOutputStream("Question.txt"), true);
 		PrintWriter writera = new PrintWriter(new FileOutputStream("Answer.txt"), true);
 		try {
@@ -379,10 +414,10 @@ public class QuestionPaperGenerator extends JFrame {
 
 			String info = "";
 			String formatStr = "%-70s %-55s";
-			writerq.println(String.format(formatStr, "", "BITS Pilani Hyderabad Campus"));
+			writerq.println(String.format(formatStr, "", instituteName));
 			formatStr = "%-10s %-10s %140s %-85s";
-			writerq.println(String.format(formatStr, " ", "Subject:Maths", " ", "Date:27/04/2016"));
-			writerq.println(String.format(formatStr, " ", "Course-Code:MATHF211", " ", "MM:50"));
+			writerq.println(String.format(formatStr, " ", "Subject:"+topic, " ", "Date:"+date));
+			writerq.println(String.format(formatStr, " ", "Course-Code:"+courseCode, " ", "MM:"+maxMarks));
 			writerq.println(
 					"          --------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 			writerq.println();
@@ -395,7 +430,9 @@ public class QuestionPaperGenerator extends JFrame {
 						int indexB = s.indexOf("B.");
 						int indexC = s.indexOf("C.");
 						int indexD = s.indexOf("D.");
+						System.out.println(indexA+" "+indexB+" "+indexC+" "+indexD);
 						String ques = s.substring(0, indexA - 1);
+						System.out.println(ques);
 						String optionA = s.substring(indexA, indexB);
 						String optionB = s.substring(indexB, indexC);
 						String optionC = s.substring(indexC, indexD);
