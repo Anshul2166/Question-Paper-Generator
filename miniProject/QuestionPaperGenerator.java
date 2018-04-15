@@ -363,7 +363,7 @@ public class QuestionPaperGenerator extends JFrame {
 			currentQuestion++;
 			if (currentQuestion == number) {
 				JOptionPane.showMessageDialog(this,
-						"Number of correct answers is" + correct + "\n" + "Number of wrong answers is" + wrong);
+						"Number of correct answers is:" + correct + "\n" + "Number of wrong answers is:" + wrong+"\n"+"Accuracy in test: "+(double)correct*100/number+"%");
 				System.out.println(currentQuestion);
 				return;
 			}
