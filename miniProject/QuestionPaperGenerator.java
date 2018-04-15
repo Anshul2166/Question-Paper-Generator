@@ -3,6 +3,7 @@ package miniProject;
 
 import java.awt.Color;
 import java.awt.Desktop;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -270,7 +271,7 @@ public class QuestionPaperGenerator extends JFrame {
 		JTextArea area1;
 
 		TakeATest() {
-			this.setSize(750,500);
+			this.setSize(1000,500);
 			this.setLocationRelativeTo(null);
 			this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			this.setTitle("GENERATE QUIZ");
@@ -325,23 +326,24 @@ public class QuestionPaperGenerator extends JFrame {
 			JPanel panel=new JPanel();
 			area1 = new JTextArea();
 			area1.setEditable(false);
-			area1.setBounds(0, 0,1000, 150);
+			area1.setSize(1000, 200);
+			area1.setBounds(0, 0,1000, 200);
 			user_answer = new JTextField();
 			JButton next = new JButton("Next=>");
-			user_answer.setBounds(170,225,60,50);
+			user_answer.setBounds(460,225,80,80);
 			user_answer.addActionListener(this);
 			next.addActionListener(this);
-			next.setBounds(300, 300, 80, 100);
+			next.setBounds(860, 300, 80, 80);
 			this.add(area1);
 			this.add(user_answer);
 			this.add(next);
 			this.add(panel);
-			System.out.println(choices);
 			if (choice == 1) {
-				area1.setText(questions.get(0) + "\n" + choices.get(0));
+				area1.setText("\n\n\n"+questions.get(0) + "\n" + choices.get(0));
 			} else {
-				area1.setText(questions.get(0));
+				area1.setText("\n\n\n"+questions.get(0));
 			}
+			area1.setFont(new Font("Serif",Font.BOLD,16));
 		}
 
 		@Override
@@ -365,9 +367,11 @@ public class QuestionPaperGenerator extends JFrame {
 				return;
 			}
 			if (choice == 1) {
-				area1.setText(questions.get(currentQuestion) + "\n" + choices.get(currentQuestion));
+				area1.setText("\n\n\n"+questions.get(currentQuestion) + "\n" + choices.get(currentQuestion));
+				area1.setFont(new Font("Serif",Font.BOLD,16));
 			} else {
-				area1.setText(questions.get(currentQuestion));
+				area1.setText("\n\n\n"+questions.get(currentQuestion));
+				area1.setFont(new Font("Serif",Font.BOLD,16));
 			}
 		}
 	}
