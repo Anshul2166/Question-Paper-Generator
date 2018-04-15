@@ -1,4 +1,4 @@
-package miniProject;
+//package miniProject;
 
 import java.awt.Color;
 import java.awt.Desktop;
@@ -9,6 +9,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -327,10 +328,12 @@ public class QuestionPaperGenerator extends JFrame {
 
 	void generate(int sub, int choice, int n) throws IOException {
 		System.out.println(format);
-		BufferedReader q, a;
-		PrintWriter writerq = new PrintWriter("Question"+format, "UTF-8");
-		PrintWriter writera = new PrintWriter("Answer"+format, "UTF-8");
-
+		BufferedReader q=null, a=null;
+//		PrintWriter writerq = new PrintWriter("Question"+format, "UTF-8");
+//		PrintWriter writera = new PrintWriter("Answer"+format, "UTF-8");
+		PrintWriter writerq= new PrintWriter(new FileOutputStream("Question.txt"), true);
+		PrintWriter writera= new PrintWriter(new FileOutputStream("Answer.txt"), true);
+		try{
 		if (sub == 1) {
 			if (choice == 1) {
 				q = new BufferedReader(new FileReader("mathq1.txt"));
@@ -381,11 +384,21 @@ public class QuestionPaperGenerator extends JFrame {
 		for (int i = 0, c = 0; i < 10; i++) {
 			if (lineNo.contains(i)) {
 				info = q.readLine();
-				writerq.println((++c) + ". " + info);
+				String s=(++c) + ". " + info;
+				int index=info.indexOf("A.");
+				System.out.println(index);
+				String ques=info.substring(0, index-1);
+				String option=info.substring(index);
+				System.out.println(ques);
+				System.out.println(option);
+//				writerq.println(String.format("%1$" + (10 + s.length()) + "s", ques));
+//				writerq.println(String.format("%1$" + (10 + s.length()) + "s", option));
+				writerq.println(ques);
+				writerq.println(option);
 			}
 			else
 				info = q.readLine();
-
+			writerq.println();
 		}
 
 		writera.println("ANSWER :");
@@ -400,11 +413,17 @@ public class QuestionPaperGenerator extends JFrame {
 				info = a.readLine();
 
 		}
-
+		}catch(Exception e)
+		{
+			e.printStackTrace(writerq);
+			e.printStackTrace(writera);
+		}
+		finally{
 		q.close();
 		a.close();
 		writerq.close();
 		writera.close();
+		}
 	}
 
 	void Delete() {

@@ -1,0 +1,20 @@
+The average of first 50 natural numbers is .		 A. 25.30 		B. 25.5 		 C. 25.00 		 D. 25.00
+The number of 3-digit numbers divisible by 6, is. 	A. 149  		B. 166  		C. 150
+What is 1004 divided by 2? 		A. 52 		 B. 502  		 C. 520   		D. 5002
+A clock strikes once at 1 o’clock, twice at 2 o’clock, thrice at 3 o’clock and so on. How many times will it strike in 24 hours? 		A. 78  B. 136 C. 156  D. 196
+106 × 106 – 94 × 94 = ?			 A. 2004 B. 2400 C. 1904 D. 1906
+Which of the following numbers gives 240 when added to its own square?		 A. 15 B. 16 C. 18 D. 20
+The simplest form of 1.5 : 2.5 is  		A. 6 : 10 B. 15 : 25 C. 0.75 : 1.25 D. 3 : 5
+Which of the following is a subset of  {b, c, d}? 		A.{ } B.{a} C.{1 , 2 , 3} D.{a, b, c}
+In coordinate geometry, the equation of the x-axis is 		 A.y = x  B.y = 0  C.x = 0  D.y = 1
+3 4/5 expressed as a decimal is 			A.3.40  B.3.60 C.3.80 D.3.50
+2^n , n is called ___
+Value of 0.3^2 is ___
+Value of x in 3x-4 = 17 is ____
+3 consecutive numbers with sum 12 are __,__,___
+9x+ ___ = 7 has solution x=-1
+Sum of two consecutive multiples of 10 is 210. Smaller number is ___
+x/3 = 27/x. x=___
+Adding 15 to 4 times 7 equals ___
+x/5 + 12 = 30 has solution ____
+After 18 years, John will be 4 times as old as he is now. His present age is ___
