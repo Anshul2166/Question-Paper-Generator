@@ -35,7 +35,6 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 //ID : 2015  PASSWORD: A3309
-
 public class QuestionPaperGenerator extends JFrame {
 	JButton submit, viewB, delete, edit, insert, Generate, Format, Question, Reject, test;
 	JTextField tid, numberT, instituteField, marksField, dateField, codeField, subjectField;
@@ -43,7 +42,7 @@ public class QuestionPaperGenerator extends JFrame {
 	JPasswordField pid;
 	JRadioButton op1, op2, op3;
 	int buttonClicked;
-	int subject = 1, choice = 1, number = 5;
+	int subject = 1, choice = 1, number = 5, totalQuestions = 10;
 	String format = ".txt";
 	File fileq = new File("Question.txt");
 	File filea = new File("Answer.txt");
@@ -271,7 +270,7 @@ public class QuestionPaperGenerator extends JFrame {
 		JTextArea area1;
 
 		TakeATest() {
-			this.setSize(1000,500);
+			this.setSize(1000, 500);
 			this.setLocationRelativeTo(null);
 			this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			this.setTitle("Take a test");
@@ -283,7 +282,6 @@ public class QuestionPaperGenerator extends JFrame {
 			} catch (FileNotFoundException e1) {
 				e1.printStackTrace();
 			}
-
 			String info = null;
 			for (int p = 0; p < 8; p++) {
 				try {
@@ -292,49 +290,48 @@ public class QuestionPaperGenerator extends JFrame {
 					e.printStackTrace();
 				}
 			}
-			for(int j=0;j<10;j++){
-			String ques=null;
-			try {
-				ques = q.readLine();
-				if(ques==null){
-					break;
-				}
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			if (choice == 1) {
+			for (int j = 0; j < 10; j++) {
+				String ques = null;
 				try {
-					questions.add(ques);
-					choices.add(q.readLine());
-					String s = q.readLine();
-					answers.add(a.readLine());
-				} catch (IOException e) {
-					e.printStackTrace();
+					ques = q.readLine();
+					if (ques == null) {
+						break;
+					}
+				} catch (IOException e1) {
+					e1.printStackTrace();
 				}
+				if (choice == 1) {
+					try {
+						questions.add(ques);
+						choices.add(q.readLine());
+						String s = q.readLine();
+						answers.add(a.readLine());
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
 
-			} else {
-				try {
-					questions.add(ques);
-					String s = q.readLine();
-					answers.add(a.readLine());
-				} catch (IOException e) {
-					e.printStackTrace();
+				} else {
+					try {
+						questions.add(ques);
+						String s = q.readLine();
+						answers.add(a.readLine());
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
 				}
-			}
 			}
 			System.out.println(questions);
-			JPanel panel=new JPanel();
+			JPanel panel = new JPanel();
 			area1 = new JTextArea();
 			area1.setEditable(false);
 			area1.setSize(1000, 200);
-			area1.setBounds(0, 0,1000, 200);
+			area1.setBounds(0, 0, 1000, 200);
 			user_answer = new JTextField();
 			JButton next = new JButton("Next=>");
-			user_answer.setBounds(460,225,80,80);
+			user_answer.setBounds(460, 225, 80, 80);
 			user_answer.addActionListener(this);
 			user_answer.setHorizontalAlignment(SwingConstants.CENTER);
-			user_answer.setFont(new Font("Arial",Font.BOLD,16));
+			user_answer.setFont(new Font("Arial", Font.BOLD, 16));
 			next.addActionListener(this);
 			next.setBounds(860, 300, 80, 80);
 			this.add(area1);
@@ -342,11 +339,11 @@ public class QuestionPaperGenerator extends JFrame {
 			this.add(next);
 			this.add(panel);
 			if (choice == 1) {
-				area1.setText("\n\n\n"+questions.get(0) + "\n" +"\n"+ choices.get(0));
+				area1.setText("\n\n\n" + questions.get(0) + "\n" + "\n" + choices.get(0));
 			} else {
-				area1.setText("\n\n\n"+questions.get(0));
+				area1.setText("\n\n\n" + questions.get(0));
 			}
-			area1.setFont(new Font("Arial",Font.BOLD,16));
+			area1.setFont(new Font("Arial", Font.BOLD, 16));
 		}
 
 		@Override
@@ -362,19 +359,20 @@ public class QuestionPaperGenerator extends JFrame {
 				correct++;
 			} else
 				wrong++;
-			
+
 			currentQuestion++;
-			if(currentQuestion==number){
-				JOptionPane.showMessageDialog(this,correct+" "+wrong);
+			if (currentQuestion == number) {
+				JOptionPane.showMessageDialog(this,
+						"Number of correct answers is" + correct + "\n" + "Number of wrong answers is" + wrong);
 				System.out.println(currentQuestion);
 				return;
 			}
 			if (choice == 1) {
-				area1.setText("\n\n\n"+questions.get(currentQuestion) + "\n"+"\n" + choices.get(currentQuestion));
+				area1.setText("\n\n\n" + questions.get(currentQuestion) + "\n" + "\n" + choices.get(currentQuestion));
 			} else {
-				area1.setText("\n\n\n"+questions.get(currentQuestion));
+				area1.setText("\n\n\n" + questions.get(currentQuestion));
 			}
-			this.setTitle("Question "+(currentQuestion+1)+" of "+number);
+			this.setTitle("Question " + (currentQuestion + 1) + " of " + number);
 		}
 	}
 
@@ -616,7 +614,7 @@ public class QuestionPaperGenerator extends JFrame {
 			writerq.println(
 					"          --------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 			writerq.println();
-			for (int i = 0, c = 0; i < 10; i++) {
+			for (int i = 0, c = 0;; i++) {
 				info = q.readLine();
 				if (info == null) {
 					// reached end of file
@@ -648,21 +646,15 @@ public class QuestionPaperGenerator extends JFrame {
 				}
 
 			}
-
-			writera.println("ANSWER :");
-
 			for (int i = 0, c = 0; i < 10; i++) {
 				if (lineNo.contains(i)) {
 					info = a.readLine();
-					writera.println((++c) + ". " + info);
-				}
-
-				else
+					writera.println(info);
+				} else
 					info = a.readLine();
-
-				Desktop desktop = Desktop.getDesktop();
-				desktop.open(fileq);
-				desktop.open(filea);
+				// Desktop desktop = Desktop.getDesktop();
+				// desktop.open(fileq);
+				// desktop.open(filea);
 			}
 		} catch (Exception e) {
 			e.printStackTrace(writerq);
