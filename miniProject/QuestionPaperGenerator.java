@@ -178,7 +178,7 @@ public class QuestionPaperGenerator extends JFrame {
 			edit.setBounds(220, 200, 130, 30);
 			insert = new JButton("Question Type");
 			insert.setBounds(50, 200, 130, 30);
-			test = new JButton("Question Type");
+			test = new JButton("Take a test");
 			test.setBounds(135, 310, 130, 30);
 			viewB.addActionListener(this);
 			delete.addActionListener(this);
@@ -274,7 +274,7 @@ public class QuestionPaperGenerator extends JFrame {
 			this.setSize(1000,500);
 			this.setLocationRelativeTo(null);
 			this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			this.setTitle("GENERATE QUIZ");
+			this.setTitle("Take a test");
 			this.setVisible(true);
 			BufferedReader q = null, a = null;
 			try {
@@ -332,6 +332,8 @@ public class QuestionPaperGenerator extends JFrame {
 			JButton next = new JButton("Next=>");
 			user_answer.setBounds(460,225,80,80);
 			user_answer.addActionListener(this);
+			user_answer.setHorizontalAlignment(SwingConstants.CENTER);
+			user_answer.setFont(new Font("Arial",Font.BOLD,16));
 			next.addActionListener(this);
 			next.setBounds(860, 300, 80, 80);
 			this.add(area1);
@@ -339,11 +341,11 @@ public class QuestionPaperGenerator extends JFrame {
 			this.add(next);
 			this.add(panel);
 			if (choice == 1) {
-				area1.setText("\n\n\n"+questions.get(0) + "\n" + choices.get(0));
+				area1.setText("\n\n\n"+questions.get(0) + "\n" +"\n"+ choices.get(0));
 			} else {
 				area1.setText("\n\n\n"+questions.get(0));
 			}
-			area1.setFont(new Font("Serif",Font.BOLD,16));
+			area1.setFont(new Font("Arial",Font.BOLD,16));
 		}
 
 		@Override
@@ -367,12 +369,11 @@ public class QuestionPaperGenerator extends JFrame {
 				return;
 			}
 			if (choice == 1) {
-				area1.setText("\n\n\n"+questions.get(currentQuestion) + "\n" + choices.get(currentQuestion));
-				area1.setFont(new Font("Serif",Font.BOLD,16));
+				area1.setText("\n\n\n"+questions.get(currentQuestion) + "\n"+"\n" + choices.get(currentQuestion));
 			} else {
 				area1.setText("\n\n\n"+questions.get(currentQuestion));
-				area1.setFont(new Font("Serif",Font.BOLD,16));
 			}
+			this.setTitle("Question "+(currentQuestion+1)+" of "+number);
 		}
 	}
 
