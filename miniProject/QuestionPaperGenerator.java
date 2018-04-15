@@ -315,7 +315,7 @@ public class QuestionPaperGenerator extends JFrame {
 
 			} else {
 				try {
-					questions.add(q.readLine());
+					questions.add(ques);
 					String s = q.readLine();
 					answers.add(a.readLine());
 				} catch (IOException e) {
@@ -323,6 +323,7 @@ public class QuestionPaperGenerator extends JFrame {
 				}
 			}
 			}
+			System.out.println(questions);
 			JPanel panel=new JPanel();
 			area1 = new JTextArea();
 			area1.setEditable(false);
@@ -457,7 +458,6 @@ public class QuestionPaperGenerator extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent ae) {
-			// TODO Auto-generated method stub
 			if (ae.getSource() == selectQBank) {
 				JFileChooser chooser = new JFileChooser();
 				int returnVal = chooser.showOpenDialog(null);
@@ -577,7 +577,6 @@ public class QuestionPaperGenerator extends JFrame {
 						q = new BufferedReader(new FileReader("mathq3.txt"));
 						a = new BufferedReader(new FileReader("matha3.txt"));
 					}
-
 				}
 
 				else {
