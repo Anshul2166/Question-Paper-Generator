@@ -10,12 +10,14 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 
 import javax.swing.ButtonGroup;
@@ -27,13 +29,14 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 //ID : 2015  PASSWORD: A3309
 
 public class QuestionPaperGenerator extends JFrame {
-	JButton submit, viewB, delete, edit, insert, Generate, Format, Question, Reject;
+	JButton submit, viewB, delete, edit, insert, Generate, Format, Question, Reject, test;
 	JTextField tid, numberT, instituteField, marksField, dateField, codeField, subjectField;
 	JRadioButton sub1, sub2;
 	JPasswordField pid;
@@ -133,7 +136,7 @@ public class QuestionPaperGenerator extends JFrame {
 
 	public class QuestionPaperGeneratorWindow extends JFrame implements ItemListener, ActionListener {
 		QuestionPaperGeneratorWindow() {
-			this.setSize(400, 400);
+			this.setSize(400, 450);
 			this.setLocationRelativeTo(null);
 			this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			this.setTitle("GENERATE QUIZ");
@@ -142,6 +145,7 @@ public class QuestionPaperGenerator extends JFrame {
 			JTextField dispNUM = new JTextField();
 			numberT = new JTextField();
 			display.setText("SELECT A SUBJECT");
+			display.setHorizontalAlignment(SwingConstants.CENTER);
 			display.setBounds(50, 50, 300, 35);
 			display.setEditable(false);
 
@@ -152,13 +156,13 @@ public class QuestionPaperGenerator extends JFrame {
 			radioGroup.add(sub2);
 
 			JPanel panelR = new JPanel();
-			// panelR.setBackground(Color.lightGray);
 			panelR.add(sub1);
 			panelR.add(sub2);
 			panelR.setBounds(50, 110, 300, 30);
 
 			dispNUM.setText("Number of Questions");
 			dispNUM.setBounds(20, 150, 120, 30);
+			display.setHorizontalAlignment(SwingConstants.CENTER);
 			dispNUM.setEditable(false);
 
 			numberT.setText("5");
@@ -173,11 +177,13 @@ public class QuestionPaperGenerator extends JFrame {
 			edit.setBounds(220, 200, 130, 30);
 			insert = new JButton("Question Type");
 			insert.setBounds(50, 200, 130, 30);
+			test = new JButton("Question Type");
+			test.setBounds(135, 310, 130, 30);
 			viewB.addActionListener(this);
 			delete.addActionListener(this);
 			edit.addActionListener(this);
 			insert.addActionListener(this);
-
+			test.addActionListener(this);
 			sub1.addItemListener(this);
 			sub2.addItemListener(this);
 
@@ -191,6 +197,7 @@ public class QuestionPaperGenerator extends JFrame {
 			this.add(delete);
 			this.add(edit);
 			this.add(insert);
+			this.add(test);
 			this.add(Panel2);
 			this.setVisible(true);
 		}
@@ -235,6 +242,132 @@ public class QuestionPaperGenerator extends JFrame {
 					JOptionPane.showMessageDialog(this, "File Does Not Exist. Generate a file to edit.", "Error",
 							JOptionPane.ERROR_MESSAGE);
 				}
+			} else if (e.getSource() == test) {
+				if (fileq.exists() && filea.exists()) {
+					try {
+						new TakeATest();
+					} catch (Exception e1) {
+					}
+				}
+
+				else {
+					JOptionPane.showMessageDialog(this, "File Does Not Exist. Generate a file to edit.", "Error",
+							JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		}
+	}
+
+	public class TakeATest extends JFrame implements ActionListener, ItemListener {
+
+		int currentQuestion = 0;
+		List<String> questions = new ArrayList<String>();
+		List<String> choices = new ArrayList<String>();
+		List<String> answers = new ArrayList<String>();
+		int correct = 0;
+		int wrong = 0;
+		JTextField user_answer;
+		JTextArea area1;
+
+		TakeATest() {
+			this.setSize(750,500);
+			this.setLocationRelativeTo(null);
+			this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			this.setTitle("GENERATE QUIZ");
+			this.setVisible(true);
+			BufferedReader q = null, a = null;
+			try {
+				q = new BufferedReader(new FileReader("Question.txt"));
+				a = new BufferedReader(new FileReader("Answer.txt"));
+			} catch (FileNotFoundException e1) {
+				e1.printStackTrace();
+			}
+
+			String info = null;
+			for (int p = 0; p < 8; p++) {
+				try {
+					String s = q.readLine();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			for(int j=0;j<10;j++){
+			String ques=null;
+			try {
+				ques = q.readLine();
+				if(ques==null){
+					break;
+				}
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			if (choice == 1) {
+				try {
+					questions.add(ques);
+					choices.add(q.readLine());
+					String s = q.readLine();
+					answers.add(a.readLine());
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+
+			} else {
+				try {
+					questions.add(q.readLine());
+					String s = q.readLine();
+					answers.add(a.readLine());
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			}
+			JPanel panel=new JPanel();
+			area1 = new JTextArea();
+			area1.setEditable(false);
+			area1.setBounds(0, 0,1000, 150);
+			user_answer = new JTextField();
+			JButton next = new JButton("Next=>");
+			user_answer.setBounds(170,225,60,50);
+			user_answer.addActionListener(this);
+			next.addActionListener(this);
+			next.setBounds(300, 300, 80, 100);
+			this.add(area1);
+			this.add(user_answer);
+			this.add(next);
+			this.add(panel);
+			System.out.println(choices);
+			if (choice == 1) {
+				area1.setText(questions.get(0) + "\n" + choices.get(0));
+			} else {
+				area1.setText(questions.get(0));
+			}
+		}
+
+		@Override
+		public void itemStateChanged(ItemEvent arg0) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			// TODO Auto-generated method stub
+			if (user_answer.getText().equalsIgnoreCase(answers.get(currentQuestion))) {
+				correct++;
+			} else
+				wrong++;
+			
+			currentQuestion++;
+			if(currentQuestion==number){
+				JOptionPane.showMessageDialog(this,correct+" "+wrong);
+				System.out.println(currentQuestion);
+				return;
+			}
+			if (choice == 1) {
+				area1.setText(questions.get(currentQuestion) + "\n" + choices.get(currentQuestion));
+			} else {
+				area1.setText(questions.get(currentQuestion));
 			}
 		}
 	}
@@ -243,8 +376,9 @@ public class QuestionPaperGenerator extends JFrame {
 		JButton selectQBank, selectABank, generateFromBank;
 		String qBank = null;
 		String aBank = null;
-		JRadioButton mcq,mcqN;
-		JTextField qBankFile,aBankFile;
+		JRadioButton mcq, mcqN;
+		JTextField qBankFile, aBankFile;
+
 		SelectBank() {
 			this.setSize(500, 450);
 			this.setLocationRelativeTo(null);
@@ -256,37 +390,37 @@ public class QuestionPaperGenerator extends JFrame {
 			display.setBounds(50, 50, 300, 35);
 			display.setEditable(false);
 
-			JLabel labelMcq=new JLabel("Is paper mcq?");
-			mcq=new JRadioButton("Yes",null,true);
-			mcqN=new JRadioButton("No");
-			ButtonGroup group=new ButtonGroup();
+			JLabel labelMcq = new JLabel("Is paper mcq?");
+			mcq = new JRadioButton("Yes", null, true);
+			mcqN = new JRadioButton("No");
+			ButtonGroup group = new ButtonGroup();
 			group.add(mcq);
 			group.add(mcqN);
-			
-			JPanel panelT = new JPanel(new GridLayout(2,2));
-			JLabel qBankFileLabel=new JLabel("Question Bank Selected:");
-			JLabel aBankFileLabel=new JLabel("Answer Bank Selected:");
-			qBankFile=new JTextField();
+
+			JPanel panelT = new JPanel(new GridLayout(2, 2));
+			JLabel qBankFileLabel = new JLabel("Question Bank Selected:");
+			JLabel aBankFileLabel = new JLabel("Answer Bank Selected:");
+			qBankFile = new JTextField();
 			qBankFile.setEditable(false);
 			qBankFile.setText("None Selected");
 			qBankFile.setHorizontalAlignment(SwingConstants.CENTER);
-			aBankFile=new JTextField();
+			aBankFile = new JTextField();
 			aBankFile.setEditable(false);
 			aBankFile.setText("None Selected");
 			aBankFile.setHorizontalAlignment(SwingConstants.CENTER);
-			panelT.setBounds(50,50,350, 100);
-			
+			panelT.setBounds(50, 50, 350, 100);
+
 			panelT.add(qBankFileLabel);
 			panelT.add(qBankFile);
 			panelT.add(aBankFileLabel);
 			panelT.add(aBankFile);
-			
+
 			JPanel panelR = new JPanel();
 			panelR.add(labelMcq);
 			panelR.add(mcq);
 			panelR.add(mcqN);
 			panelR.setBounds(90, 110, 300, 30);
-			
+
 			selectQBank = new JButton("Select Question Bank");
 			selectQBank.setBounds(50, 200, 200, 30);
 			selectABank = new JButton("Select Answer Bank");
@@ -309,13 +443,10 @@ public class QuestionPaperGenerator extends JFrame {
 
 		@Override
 		public void itemStateChanged(ItemEvent ie) {
-			if(ie.getSource()==mcq)
-			{
-				choice=1;
-			}
-			else if(ie.getSource()==mcqN)
-			{
-				choice=2;
+			if (ie.getSource() == mcq) {
+				choice = 1;
+			} else if (ie.getSource() == mcqN) {
+				choice = 2;
 			}
 		}
 
@@ -326,14 +457,14 @@ public class QuestionPaperGenerator extends JFrame {
 				JFileChooser chooser = new JFileChooser();
 				int returnVal = chooser.showOpenDialog(null);
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
-					qBank=chooser.getSelectedFile().getAbsolutePath();
+					qBank = chooser.getSelectedFile().getAbsolutePath();
 					qBankFile.setText(chooser.getSelectedFile().getName());
 				}
 			} else if (ae.getSource() == selectABank) {
 				JFileChooser chooser = new JFileChooser();
 				int returnVal = chooser.showOpenDialog(null);
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
-					aBank=chooser.getSelectedFile().getAbsolutePath();
+					aBank = chooser.getSelectedFile().getAbsolutePath();
 					aBankFile.setText(chooser.getSelectedFile().getName());
 				}
 			} else if (ae.getSource() == generateFromBank) {
@@ -345,9 +476,8 @@ public class QuestionPaperGenerator extends JFrame {
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
-				}
-				else{
-					JOptionPane.showMessageDialog(this,"Please select both banks");
+				} else {
+					JOptionPane.showMessageDialog(this, "Please select both banks");
 				}
 			}
 		}
@@ -484,12 +614,11 @@ public class QuestionPaperGenerator extends JFrame {
 			writerq.println();
 			for (int i = 0, c = 0; i < 10; i++) {
 				info = q.readLine();
-				if(info==null)
-				{
-					//reached end of file
+				if (info == null) {
+					// reached end of file
 					break;
 				}
-				if (lineNo.contains(i)) {					
+				if (lineNo.contains(i)) {
 					String s = (++c) + ". " + info;
 					if (choice == 1) {
 						int indexA = s.indexOf("A.");
@@ -513,7 +642,7 @@ public class QuestionPaperGenerator extends JFrame {
 					}
 					writerq.println();
 				}
-				
+
 			}
 
 			writera.println("ANSWER :");
@@ -534,7 +663,7 @@ public class QuestionPaperGenerator extends JFrame {
 		} catch (Exception e) {
 			e.printStackTrace(writerq);
 			e.printStackTrace(writera);
-			JOptionPane.showMessageDialog(this,"File Does not Follow proper format");
+			JOptionPane.showMessageDialog(this, "File Does not Follow proper format");
 		} finally {
 			q.close();
 			a.close();
