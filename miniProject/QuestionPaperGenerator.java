@@ -1,4 +1,5 @@
-//package miniProject;
+
+package miniProject;
 
 import java.awt.Color;
 import java.awt.Desktop;
@@ -30,14 +31,14 @@ import javax.swing.JTextField;
 //ID : 2015  PASSWORD: A8459
 
 public class QuestionPaperGenerator extends JFrame {
-	JButton submit, viewB, delete, edit, insert, Generate,Format,Question,Reject;
+	JButton submit, viewB, delete, edit, insert, Generate, Format, Question, Reject;
 	JTextField tid, numberT;
 	JRadioButton sub1, sub2;
 	JPasswordField pid;
 	JRadioButton op1, op2, op3;
 	int buttonClicked;
 	int subject = 1, choice = 1, number = 5;
-	String format=".txt";
+	String format = ".txt";
 	File fileq = new File("Question.txt");
 	File filea = new File("Answer.txt");
 
@@ -198,7 +199,7 @@ public class QuestionPaperGenerator extends JFrame {
 	}
 
 	public class SelectType extends JFrame implements ActionListener, ItemListener {
-		SelectType(){
+		SelectType() {
 			this.setSize(400, 400);
 			this.setLocationRelativeTo(null);
 			this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -208,7 +209,7 @@ public class QuestionPaperGenerator extends JFrame {
 			display.setText("Select Output File Type  :");
 			display.setBounds(50, 50, 300, 35);
 			display.setEditable(false);
-			
+
 			op1 = new JRadioButton("txt", null, true);
 			op1.setBounds(50, 100, 150, 40);
 			op2 = new JRadioButton("docx");
@@ -219,12 +220,12 @@ public class QuestionPaperGenerator extends JFrame {
 			questionType.add(op1);
 			questionType.add(op2);
 			questionType.add(op3);
-			
+
 			JPanel panelForInsertQuestionFrame = new JPanel();
 
 			Format = new JButton("Format");
 			Format.setBounds(150, 300, 100, 30);
-			
+
 			op1.addItemListener(this);
 			op2.addItemListener(this);
 			op3.addItemListener(this);
@@ -242,22 +243,23 @@ public class QuestionPaperGenerator extends JFrame {
 		public void itemStateChanged(ItemEvent ie) {
 			// TODO Auto-generated method stub
 			if (ie.getSource() == op1)
-				format=".txt";
+				format = ".txt";
 			else if (ie.getSource() == op2)
-				format=".docx";
-			else if(ie.getSource()==op3)
-				format=".pdf";
+				format = ".docx";
+			else if (ie.getSource() == op3)
+				format = ".pdf";
 		}
 
 		@Override
 		public void actionPerformed(ActionEvent ae) {
 			// TODO Auto-generated method stub
-			if(ae.getSource()==Format){
+			if (ae.getSource() == Format) {
 				setVisible(false);
 				System.out.println("Hello");
 			}
 		}
 	}
+
 	public class Option extends JFrame implements ActionListener, ItemListener {
 		Option() {
 
@@ -328,103 +330,106 @@ public class QuestionPaperGenerator extends JFrame {
 
 	void generate(int sub, int choice, int n) throws IOException {
 		System.out.println(format);
-		BufferedReader q=null, a=null;
-//		PrintWriter writerq = new PrintWriter("Question"+format, "UTF-8");
-//		PrintWriter writera = new PrintWriter("Answer"+format, "UTF-8");
-		PrintWriter writerq= new PrintWriter(new FileOutputStream("Question.txt"), true);
-		PrintWriter writera= new PrintWriter(new FileOutputStream("Answer.txt"), true);
-		try{
-		if (sub == 1) {
-			if (choice == 1) {
-				q = new BufferedReader(new FileReader("mathq1.txt"));
-				a = new BufferedReader(new FileReader("matha1.txt"));
+		BufferedReader q = null, a = null;
+		// PrintWriter writerq = new PrintWriter("Question"+format, "UTF-8");
+		// PrintWriter writera = new PrintWriter("Answer"+format, "UTF-8");
+		PrintWriter writerq = new PrintWriter(new FileOutputStream("Question.txt"), true);
+		PrintWriter writera = new PrintWriter(new FileOutputStream("Answer.txt"), true);
+		try {
+			if (sub == 1) {
+				if (choice == 1) {
+					q = new BufferedReader(new FileReader("mathq1.txt"));
+					a = new BufferedReader(new FileReader("matha1.txt"));
+				}
+
+				else {
+					q = new BufferedReader(new FileReader("mathq2.txt"));
+					a = new BufferedReader(new FileReader("matha2.txt"));
+				}
+
 			}
 
 			else {
-				q = new BufferedReader(new FileReader("mathq2.txt"));
-				a = new BufferedReader(new FileReader("matha2.txt"));
+				if (choice == 1) {
+					q = new BufferedReader(new FileReader("engq1.txt"));
+					a = new BufferedReader(new FileReader("enga1.txt"));
+				}
+
+				else {
+					q = new BufferedReader(new FileReader("engq2.txt"));
+					a = new BufferedReader(new FileReader("enga2.txt"));
+				}
 			}
 
-		}
+			Random random = new Random();
+			ArrayList<Integer> lineNo = new ArrayList<Integer>();
 
-		else {
-			if (choice == 1) {
-				q = new BufferedReader(new FileReader("engq1.txt"));
-				a = new BufferedReader(new FileReader("enga1.txt"));
+			for (int i = 0; i < 10; i++)
+				lineNo.add(i);
+
+			Collections.shuffle(lineNo);
+
+			for (int i = 9; i > n - 1; i--)
+				lineNo.remove(i);
+
+			Collections.sort(lineNo);
+
+			String info = "";
+			String formatStr = "%-70s %-55s";
+			writerq.println(String.format(formatStr, "", "BITS Pilani Hyderabad Campus"));
+			formatStr = "%-10s %-10s %140s %-85s";
+			writerq.println(String.format(formatStr, " ", "Subject:Maths", " ", "Date:27/04/2016"));
+			writerq.println(String.format(formatStr, " ", "Course-Code:MATHF211", " ", "MM:50"));
+			writerq.println(
+					"          --------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+			writerq.println();
+			for (int i = 0, c = 0; i < 10; i++) {
+				if (lineNo.contains(i)) {
+					info = q.readLine();
+					String s = (++c) + ". " + info;
+					if (choice == 1) {
+						int indexA = s.indexOf("A.");
+						int indexB = s.indexOf("B.");
+						int indexC = s.indexOf("C.");
+						int indexD = s.indexOf("D.");
+						String ques = s.substring(0, indexA - 1);
+						String optionA = s.substring(indexA, indexB);
+						String optionB = s.substring(indexB, indexC);
+						String optionC = s.substring(indexC, indexD);
+						String optionD = s.substring(indexD);
+						writerq.println(String.format("%1$" + (10 + ques.length()) + "s", ques));
+						writerq.print(String.format("%1$" + (10 + optionA.length()) + "s", optionA));
+						writerq.print(String.format("%1$" + (10 + optionB.length()) + "s", optionB));
+						writerq.print(String.format("%1$" + (10 + optionC.length()) + "s", optionC));
+						writerq.println(String.format("%1$" + (10 + optionD.length()) + "s", optionD));
+					} else {
+						writerq.println(String.format("%1$" + (10 + s.length()) + "s", s));
+					}
+					writerq.println();
+				} else
+					info = q.readLine();
 			}
 
-			else {
-				q = new BufferedReader(new FileReader("engq2.txt"));
-				a = new BufferedReader(new FileReader("enga2.txt"));
+			writera.println("ANSWER :");
+
+			for (int i = 0, c = 0; i < 10; i++) {
+				if (lineNo.contains(i)) {
+					info = a.readLine();
+					writera.println((++c) + ". " + info);
+				}
+
+				else
+					info = a.readLine();
+
 			}
-		}
-
-		Random random = new Random();
-		ArrayList<Integer> lineNo = new ArrayList<Integer>();
-
-		for (int i = 0; i < 10; i++)
-			lineNo.add(i);
-
-		Collections.shuffle(lineNo);
-
-		for (int i = 9; i > n - 1; i--)
-			lineNo.remove(i);
-
-		Collections.sort(lineNo);
-
-		String info = "";
-		String formatStr = "%-70s %-55s";
-		writerq.println(String.format(formatStr,"","BITS Pilani Hyderabad Campus"));
-		formatStr = "%-10s %-10s %140s %-85s";
-		writerq.println(String.format(formatStr," ","Subject:Maths"," ","Date:27/04/2016"));
-		writerq.println(String.format(formatStr," ","Course-Code:MATHF211"," ","MM:50"));
-		writerq.println("          --------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
-		for (int i = 0, c = 0; i < 10; i++) {
-			if (lineNo.contains(i)) {
-				info = q.readLine();
-				String s=(++c) + ". " + info;
-				int indexA=s.indexOf("A.");
-				int indexB=s.indexOf("B.");
-				int indexC=s.indexOf("C.");
-				int indexD=s.indexOf("D.");
-				String ques=s.substring(0, indexA-1);
-				String optionA=s.substring(indexA,indexB);
-				String optionB=s.substring(indexB,indexC);
-				String optionC=s.substring(indexC,indexD);
-				String optionD=s.substring(indexD);
-				writerq.println(String.format("%1$" + (10 + ques.length()) + "s", ques));
-				writerq.print(String.format("%1$" + (10 + optionA.length()) + "s", optionA));
-				writerq.print(String.format("%1$" + (10 + optionB.length()) + "s", optionB));
-				writerq.print(String.format("%1$" + (10 + optionC.length()) + "s", optionC));
-				writerq.println(String.format("%1$" + (10 + optionD.length()) + "s", optionD));
-				writerq.println();
-			}
-			else
-				info = q.readLine();
-		}
-
-		writera.println("ANSWER :");
-
-		for (int i = 0, c = 0; i < 10; i++) {
-			if (lineNo.contains(i)) {
-				info = a.readLine();
-				writera.println((++c) + ". " + info);
-			}
-
-			else
-				info = a.readLine();
-
-		}
-		}catch(Exception e)
-		{
+		} catch (Exception e) {
 			e.printStackTrace(writerq);
 			e.printStackTrace(writera);
-		}
-		finally{
-		q.close();
-		a.close();
-		writerq.close();
-		writera.close();
+		} finally {
+			q.close();
+			a.close();
+			writerq.close();
+			writera.close();
 		}
 	}
 
