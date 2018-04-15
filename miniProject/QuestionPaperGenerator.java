@@ -414,6 +414,9 @@ public class QuestionPaperGenerator extends JFrame {
 
 			String info = "";
 			String formatStr = "%-70s %-55s";
+			writerq.println();
+			writerq.println();
+			writerq.println();
 			writerq.println(String.format(formatStr, "", instituteName));
 			formatStr = "%-10s %-10s %140s %-85s";
 			writerq.println(String.format(formatStr, " ", "Subject:"+topic, " ", "Date:"+date));
