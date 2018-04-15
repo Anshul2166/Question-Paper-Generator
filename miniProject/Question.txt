@@ -3,23 +3,18 @@ QUESTION :
            Subject:Maths                                                                                                                                              Date:27/04/2016                                                                      
            Course-Code:MATHF211                                                                                                                                              MM:50                                                                                
           --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+          1. The average of first 50 natural numbers is .		
+          A. 25.30 		          B. 25.5 		           C. 25.00 		           D. 25.00
 
-The number of 3-digit numbers divisible by 6, is. 
-A. 149  		B. 166  		C. 150
+          2. A clock strikes once at 1 o’clock, twice at 2 o’clock, thrice at 3 o’clock and so on. How many times will it strike in 24 hours? 	
+          A. 78            B. 136           C. 156            D. 196
 
+          3. 106 × 106 – 94 × 94 = ?			
+          A. 2004           B. 2400           C. 1904           D. 1906
 
-A clock strikes once at 1 o’clock, twice at 2 o’clock, thrice at 3 o’clock and so on. How many times will it strike in 24 hours? 	
-A. 78  B. 136 C. 156  D. 196
+          4. The simplest form of 1.5 : 2.5 is  	
+          A. 6 : 10           B. 15 : 25           C. 0.75 : 1.25           D. 3 : 5
 
-
-Which of the following numbers gives 240 when added to its own square?		
-A. 15 B. 16 C. 18 D. 20
-
-The simplest form of 1.5 : 2.5 is  	
-A. 6 : 10 B. 15 : 25 C. 0.75 : 1.25 D. 3 : 5
-
-
-In coordinate geometry, the equation of the x-axis is 		
-A.y = x  B.y = 0  C.x = 0  D.y = 1
-
+          5. In coordinate geometry, the equation of the x-axis is 		
+          A.y = x            B.y = 0            C.x = 0            D.y = 1
 

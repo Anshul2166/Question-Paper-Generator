@@ -373,8 +373,6 @@ public class QuestionPaperGenerator extends JFrame {
 		Collections.sort(lineNo);
 
 		String info = "";
-
-		writerq.println("QUESTION :");
 		String formatStr = "%-70s %-55s";
 		writerq.println(String.format(formatStr,"","BITS Pilani Hyderabad Campus"));
 		formatStr = "%-10s %-10s %140s %-85s";
@@ -385,20 +383,24 @@ public class QuestionPaperGenerator extends JFrame {
 			if (lineNo.contains(i)) {
 				info = q.readLine();
 				String s=(++c) + ". " + info;
-				int index=info.indexOf("A.");
-				System.out.println(index);
-				String ques=info.substring(0, index-1);
-				String option=info.substring(index);
-				System.out.println(ques);
-				System.out.println(option);
-//				writerq.println(String.format("%1$" + (10 + s.length()) + "s", ques));
-//				writerq.println(String.format("%1$" + (10 + s.length()) + "s", option));
-				writerq.println(ques);
-				writerq.println(option);
+				int indexA=s.indexOf("A.");
+				int indexB=s.indexOf("B.");
+				int indexC=s.indexOf("C.");
+				int indexD=s.indexOf("D.");
+				String ques=s.substring(0, indexA-1);
+				String optionA=s.substring(indexA,indexB);
+				String optionB=s.substring(indexB,indexC);
+				String optionC=s.substring(indexC,indexD);
+				String optionD=s.substring(indexD);
+				writerq.println(String.format("%1$" + (10 + ques.length()) + "s", ques));
+				writerq.print(String.format("%1$" + (10 + optionA.length()) + "s", optionA));
+				writerq.print(String.format("%1$" + (10 + optionB.length()) + "s", optionB));
+				writerq.print(String.format("%1$" + (10 + optionC.length()) + "s", optionC));
+				writerq.println(String.format("%1$" + (10 + optionD.length()) + "s", optionD));
+				writerq.println();
 			}
 			else
 				info = q.readLine();
-			writerq.println();
 		}
 
 		writera.println("ANSWER :");
