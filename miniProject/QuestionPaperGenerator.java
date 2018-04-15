@@ -341,10 +341,13 @@ public class QuestionPaperGenerator extends JFrame {
 					q = new BufferedReader(new FileReader("mathq1.txt"));
 					a = new BufferedReader(new FileReader("matha1.txt"));
 				}
-
-				else {
+				else if(choice==2){
 					q = new BufferedReader(new FileReader("mathq2.txt"));
 					a = new BufferedReader(new FileReader("matha2.txt"));
+				}
+				else{
+					q = new BufferedReader(new FileReader("mathq3.txt"));
+					a = new BufferedReader(new FileReader("matha3.txt"));
 				}
 
 			}
