@@ -28,6 +28,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 //ID : 2015  PASSWORD: A3309
 
@@ -243,6 +244,7 @@ public class QuestionPaperGenerator extends JFrame {
 		String qBank = null;
 		String aBank = null;
 		JRadioButton mcq,mcqN;
+		JTextField qBankFile,aBankFile;
 		SelectBank() {
 			this.setSize(500, 450);
 			this.setLocationRelativeTo(null);
@@ -261,6 +263,24 @@ public class QuestionPaperGenerator extends JFrame {
 			group.add(mcq);
 			group.add(mcqN);
 			
+			JPanel panelT = new JPanel(new GridLayout(2,2));
+			JLabel qBankFileLabel=new JLabel("Question Bank Selected:");
+			JLabel aBankFileLabel=new JLabel("Answer Bank Selected:");
+			qBankFile=new JTextField();
+			qBankFile.setEditable(false);
+			qBankFile.setText("None Selected");
+			qBankFile.setHorizontalAlignment(SwingConstants.CENTER);
+			aBankFile=new JTextField();
+			aBankFile.setEditable(false);
+			aBankFile.setText("None Selected");
+			aBankFile.setHorizontalAlignment(SwingConstants.CENTER);
+			panelT.setBounds(50,50,350, 100);
+			
+			panelT.add(qBankFileLabel);
+			panelT.add(qBankFile);
+			panelT.add(aBankFileLabel);
+			panelT.add(aBankFile);
+			
 			JPanel panelR = new JPanel();
 			panelR.add(labelMcq);
 			panelR.add(mcq);
@@ -278,6 +298,7 @@ public class QuestionPaperGenerator extends JFrame {
 			generateFromBank.addActionListener(this);
 
 			JPanel panel = new JPanel();
+			this.add(panelT);
 			this.add(panelR);
 			this.add(selectQBank);
 			this.add(selectABank);
@@ -305,15 +326,15 @@ public class QuestionPaperGenerator extends JFrame {
 				JFileChooser chooser = new JFileChooser();
 				int returnVal = chooser.showOpenDialog(null);
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
-//					qBank = chooser.getSelectedFile().getName();
 					qBank=chooser.getSelectedFile().getAbsolutePath();
+					qBankFile.setText(chooser.getSelectedFile().getName());
 				}
 			} else if (ae.getSource() == selectABank) {
 				JFileChooser chooser = new JFileChooser();
 				int returnVal = chooser.showOpenDialog(null);
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
-//					aBank = chooser.getSelectedFile().getName();
 					aBank=chooser.getSelectedFile().getAbsolutePath();
+					aBankFile.setText(chooser.getSelectedFile().getName());
 				}
 			} else if (ae.getSource() == generateFromBank) {
 				if (!(qBank == null) || !(aBank == null)) {
@@ -510,6 +531,7 @@ public class QuestionPaperGenerator extends JFrame {
 		} catch (Exception e) {
 			e.printStackTrace(writerq);
 			e.printStackTrace(writera);
+			JOptionPane.showMessageDialog(this,"File Does not Follow proper format");
 		} finally {
 			q.close();
 			a.close();
